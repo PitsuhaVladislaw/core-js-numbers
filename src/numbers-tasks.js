@@ -51,7 +51,8 @@ function getCircleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(value1, value2) {
-  return (value1 + value2) / 2;
+  const sum = value1 + value2;
+  return sum / 2;
 }
 
 /**
@@ -88,7 +89,9 @@ function getDistanceBetweenPoints(x1, y1, x2, y2) {
  */
 function getLinearEquationRoot(a, b) {
   if (a === 0) {
-    throw new Error('Coefficient "a" should not be zero for a linear equation.');
+    throw new Error(
+      'Coefficient "a" should not be zero for a linear equation.'
+    );
   }
 
   return -b / a;
@@ -215,11 +218,14 @@ function isPrime(n) {
     return false;
   }
 
-  for (let i = 2; i <= Math.sqrt(n); i++) {
+  let i = 2;
+  const length = Math.sqrt(n);
 
+  while (i <= length) {
     if (n % i === 0) {
       return false;
     }
+    i += 1;
   }
 
   return true;
@@ -243,7 +249,7 @@ function isPrime(n) {
 function toNumber(value, def) {
   const parsedValue = Number(value);
 
-  return isNaN(parsedValue) ? def : parsedValue;
+  return Number.isNaN(parsedValue) ? def : parsedValue;
 }
 
 /**
@@ -275,21 +281,22 @@ function getCube(num) {
  *   10 => 55
  */
 function getFibonacciNumber(index) {
-  if (index === 0) return 0;
-
-  if (index === 1) return 1;
-
-  let fibPrev = 0;
-  let fibCurr = 1;
-
-  for (let i = 2; i <= index; i++) {
-    const fibNext = fibPrev + fibCurr;
-
-    fibPrev = fibCurr;
-    fibCurr = fibNext;
+  if (index === 0) {
+    return 0;
   }
 
-  return fibCurr;
+  let a = 0;
+  let b = 1;
+  let i = 2;
+
+  while (i <= index) {
+    const temp = a + b;
+    a = b;
+    b = temp;
+    i += 1;
+  }
+
+  return b;
 }
 
 /**
@@ -319,7 +326,10 @@ function getSumToN(n) {
  *   5   => 5  // 5
  */
 function getSumOfDigits(num) {
-  return num.toString().split('').reduce((sum, digit) => sum + parseInt(digit, 10), 0);
+  return num
+    .toString()
+    .split('')
+    .reduce((sum, digit) => sum + parseInt(digit, 10), 0);
 }
 
 /**
@@ -334,7 +344,17 @@ function getSumOfDigits(num) {
  *   15  => false
  */
 function isPowerOfTwo(num) {
-  return (num !== 0) && ((num & (num - 1)) === 0);
+  let currentNum = num;
+
+  if (currentNum <= 0) {
+    return false;
+  }
+
+  while (currentNum > 1 && currentNum % 2 === 0) {
+    currentNum /= 2;
+  }
+
+  return currentNum === 1;
 }
 
 /**
@@ -441,7 +461,7 @@ function getNumberValue(number) {
  * '5'      => false
  */
 function isNumber(number) {
-  return typeof number === 'number' && isFinite(number);
+  return typeof number === 'number';
 }
 
 /**
@@ -630,12 +650,7 @@ function getRandomInteger(min, max) {
  * 3, 4 => 5
  */
 function getHypotenuse(a, b) {
-  if (a < 0 || b < 0) {
-    throw new Error('Side lengths should be non-negative');
-  }
-
-  const hypotenuse = Math.sqrt(a ** 2 + b ** 2);
-  return hypotenuse;
+  return Math.sqrt(a ** 2 + b ** 2);
 }
 
 /**
@@ -652,18 +667,7 @@ function getHypotenuse(a, b) {
  * 15 => 8
  */
 function getCountOfOddNumbers(number) {
-  if (number < 0) {
-    throw new Error('Input number should be non-negative');
-  }
-
-  let count = 0;
-  for (let i = 0; i <= number; i++) {
-    if (i % 2 !== 0) {
-      count++;
-    }
-  }
-
-  return count;
+  return Math.floor((number + 1) / 2);
 }
 
 module.exports = {
